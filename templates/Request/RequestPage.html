@@ -1,0 +1,161 @@
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-162026812-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-162026812-1');
+</script>
+
+{% extends 'Base/Base.html' %}
+
+{% block content %}
+<style>
+  .slider .img{
+    overflow: hidden;
+    background-position: center;
+    background-size: cover;
+
+
+    display: flex !important;
+    justify-content: center;
+    align-self: center;
+  }
+  .slider .img2{
+    overflow: hidden;
+    background-position: center;
+    background-size: cover;
+
+
+    display: flex !important;
+    justify-content: center;
+    align-self: center;
+  }
+  /* .slick-slider{
+    position: absolute !important;  width: 100%;  z-index: -1;
+  } */
+  .banner_text::before{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #001655;
+    opacity: 0.5;
+    display: block;
+    content: '';
+    z-index: -1;
+    left: 0;
+  }
+  .slider{
+    position: relative;
+  }
+  .slider .banner_title {
+    color: #ffffff;
+    margin-bottom: 5px;
+  }
+  .slider .banner_subtitle {
+    font-weight: bold;
+    color: #ffffff;
+  }
+  .slider .banner_content {
+    color: #ffffff;
+  }
+  .slider .banner_subcontent {
+    color: #ffffff;
+  }
+  .slider .banner_text{
+    display: flex;
+    align-items: center;
+    z-index: 100;
+  }
+  .slider p {
+    margin: 0px;
+  }
+  .slider .banner_btn{
+    color: #ffffff;
+    background-color: #ED7D31;
+    font-weight: bold;
+    width: 200px;
+    height: 55px;
+    display: flex;
+    border-radius : 40px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    transition: 0.5s;
+    cursor: pointer;
+    font-family : 'Noto Sans KR', sans-serif;
+    font-size : 24px;
+  }
+  .slider .banner_btn:hover {
+    background-color: #ffffff;
+    color: #001655;
+  }
+  .banner_btn_box {
+    display: flex;
+  }
+  @media (max-width: 767.5px){
+    .slider .img{
+      height: 500px;
+    }
+    .slider .img2{
+      height: 500px;
+      background-image: url("/media/main_3_2.jpg");
+    }
+    .slider .banner_text{
+      justify-content: center;
+    }
+    .slider .banner_title {
+      font-size: 38px;
+      margin-top: 50px;
+    }
+    .slider .banner_subtitle {
+      font-size: 25px;
+    }
+    .slider .banner_content {
+      font-size: 14px;
+    }
+    .slider .banner_subcontent {
+      font-size: 12px;
+    }
+  }
+  @media (min-width: 768px){
+    .slider .img{
+      height: 40vh;
+
+    }
+    .slider .banner_text{
+      justify-content: flex-start;
+    }
+    .slider .banner_title {
+      font-size: 23px;
+      margin-top: 50px;
+    }
+    .slider .banner_subtitle {
+      font-size: 50px;
+    }
+    .slider .banner_content {
+      font-size: 23px;
+    }
+    .slider .banner_subcontent {
+      font-size: 20px;
+    }
+  }
+
+</style>
+<section class="slider">
+  <div class="img" style='background-image: url("/media/request_1.jpg");'>
+    <div class="container banner_text">
+      <div>
+        <p class="banner_title">제품 완성의 꿈을 응원합니다.</p>
+        <p class="banner_subtitle">의뢰서 작성하기</p><br>
+        <p class="banner_content">작성하신 제안서를 분석하여 최적의 제조사를 매칭해드립니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% include './Request.html' %}
+
+{% endblock content %}

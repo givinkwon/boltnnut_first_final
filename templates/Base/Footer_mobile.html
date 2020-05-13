@@ -1,0 +1,123 @@
+{% load static %}
+<style>
+    ul{
+        padding: 0;
+    }
+    .Mobile_View #Footer{
+        background-color: rgb(51, 51, 51);;
+        color: rgb(187, 187, 187);
+        padding-top:5px;
+        font-size: 12px;
+        font-family: 'Spoqa Han Sans', 'Sans-serif';
+        padding-top: 24px;
+    }
+    .Mobile_View #Footer .social{
+        text-align: center;
+    }
+    .Mobile_View #Footer .info{
+        text-align: right;
+        margin-bottom: 24px;
+    }
+    .Mobile_View #Footer .info ul{
+        margin-top:8px;
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        margin-bottom:0px;
+        color: rgb(187, 187, 187);
+    }
+    .Mobile_View #Footer .info li.link{
+        cursor: pointer;
+    }
+    .Mobile_View #Footer .info li.link:hover{
+        text-decoration: underline;
+    }
+    .Mobile_View #Footer .info li.last::after{
+        display: none;
+    }
+    .Mobile_View #Footer .info li::after{
+        content: '';
+        display: inline-block;
+        width: 3px;
+        height: 3px;
+        margin: 0 10px;
+        background: rgb(130, 130, 130);
+        border-radius: 3px;
+        vertical-align: middle;
+    }
+    .Mobile_View #Footer .social-icon{
+        padding: 4px;
+        width: 24px;
+        height: 24px;
+        border-radius: 12px;
+        background-color: rgb(255, 255, 255);
+        cursor: pointer;
+    }
+    .Mobile_View #Footer .social ul{
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 8px;
+    }
+    .Mobile_View #Footer .social li{
+        margin-right: 8px;
+        margin-left: 8px;
+    }
+    .Mobile_View #Footer .footer-title{
+        color: '#ffffff';
+        font-size: 28px;
+        font-weight: bold;
+    }
+    .biz_btn_mo {
+        cursor: pointer;
+        margin: auto;
+        margin-top: 8px;
+        width: 150px;
+        height: 34px;
+        border-radius: 5px;
+        border: 1px solid #ffffff;
+        color: #ffffff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+<div id='Footer'>
+    <div class='container'>
+        <div class='row'>
+            <div class='social col-md-6'>
+                <p class="footer-title">주식회사 볼트앤너트</p>
+                <ul>
+                    <li class='last link'>서울특별시 성북구 고려대로30길 4 2층</li>
+                </ul>
+                <ul>
+                    <li class='last link'>사업자등록번호 390-87-01669</li>
+                </ul>
+                <ul>
+                    <li class='last link'>​대표자 : 윤기열, 신지섭</li>
+                </ul>
+            </div>
+            <div class='info col-md-6'>
+                <ul>
+                    <li class='link'>개인정보 처리 방침</li>
+                    <li class='last link'>이용약관</li>
+                </ul>
+                <div class="biz_btn_mo mb-4">회사소개서 다운로드</div>
+                <ul>
+                    <li class='last'>Copyright ⓒ 2019 boltnnut. All rights reserved</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+                
+<script>
+    function openMobileBiz(){
+        if ( $("#MobileBiz").css('display') == 'none'){
+            $("#MobileBiz").css('display', 'block')    
+        }
+        else {
+            $("#MobileBiz").css('display', 'none')    
+        }
+    }
+</script>

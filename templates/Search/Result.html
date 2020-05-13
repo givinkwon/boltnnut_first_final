@@ -1,0 +1,69 @@
+<style>
+#Result {
+  padding: 10px 0px;
+}
+#Result .img_wrapper {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+}
+#Result .img_wrapper:before {
+  content: "";
+  display: block;
+  margin-top: 120%;
+}
+#Result .img {
+  width: calc( 100% - 10px );
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-position: center;
+  background-size: cover;
+}
+#Result .item {
+  cursor: pointer;
+}
+#Result .item:hover {
+  filter: opacity(0.8);
+}
+#Result .item_text{
+  margin-left: 5px;
+  font-size: 13px;
+  color: #222;
+  font-weight: bold;
+}
+.no_result{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+  width: 100%;
+  text-align: center;
+}
+</style>
+
+<div id="Result">
+  <div class="row pl-3 pr-3">
+    {% if first %}
+    {% else %}
+      {% if stars.object_list|length == 0 %}
+      <div class="no_result">
+        <h4>조건에 맞는 스타가 없습니다. 조건을 다시 입력 해주세요</h4>
+      </div>
+      {% else %}
+        {% for star in stars.object_list %}
+          <div class="col-md-3 col-6 pl-0 pr-0">
+              <div class="item" onclick="location.href = '/star/{{ star.id }}'">
+                <div class="img_wrapper">
+                  <div class="img" style="background-image: url('{{ star.img.url }}');"></div>
+                </div>
+                <p class="item_text">{{ star.name }}</p>
+              </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endif %}
+  </div>
+</div>

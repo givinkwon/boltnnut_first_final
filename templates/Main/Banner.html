@@ -1,0 +1,176 @@
+<style>
+  .slider .img{
+    overflow: hidden;
+    background-position: center;
+    background-size: cover;
+
+
+    display: flex !important;
+    justify-content: center;
+    align-self: center;
+  }
+  .slider .img2{
+    overflow: hidden;
+    background-position: center;
+    background-size: cover;
+
+
+    display: flex !important;
+    justify-content: center;
+    align-self: center;
+  }
+  /* .slick-slider{
+    position: absolute !important;  width: 100%;  z-index: -1;
+  } */
+  .banner_text::before{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #001655;
+    opacity: 0.5;
+    display: block;
+    content: '';
+    z-index: -1;
+    left: 0;
+  }
+  .slider{
+    position: relative;
+  }
+  .slider .banner_title {
+    color: #ffffff;
+    margin-bottom: 5px;
+  }
+  .slider .banner_subtitle {
+    font-weight: bold;
+    color: #ffffff;
+  }
+  .slider .banner_content {
+    color: #ffffff;
+  }
+  .slider .banner_subcontent {
+    color: #ffffff;
+  }
+  .slider .banner_text{
+    display: flex;
+    align-items: center;
+    z-index: 100;
+  }
+  .slider p {
+    margin: 0px;
+  }
+  .slider .banner_btn{
+    color: #ffffff;
+    background-color: #ED7D31;
+    font-weight: bold;
+    width: 200px;
+    height: 55px;
+    display: flex;
+    border-radius : 40px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    transition: 0.5s;
+    cursor: pointer;
+    font-family : 'Noto Sans KR', sans-serif;
+    font-size : 24px;
+  }
+  .slider .banner_btn:hover {
+    background-color: #ffffff;
+    color: #001655;
+  }
+  .banner_btn_box {
+    display: flex;
+  }
+  @media (max-width: 767.5px){
+    .slider .img{
+      width : 100%;
+      height: 50vh;
+    }
+    .slider .img2{
+      height : 60vh;
+      width : 100%;
+      background-image: url("/media/main_3_2.jpg");
+    }
+    .slider .banner_text{
+      justify-content: center;
+    }
+    .slider .banner_title {
+      font-size: 15px;
+      margin-top: 70px;
+    }
+    .slider .banner_subtitle {
+      font-size: 30px;
+    }
+    .slider .banner_content {
+      font-size: 14px;
+    }
+    .slider .banner_subcontent {
+      font-size: 12px;  
+    }
+  }
+  @media (min-width: 768px){
+    .slider .img{
+      height: 80vh;
+
+    }
+     .slider .img2{
+      height: 120vh;
+      background-image: url("/media/main_3_1.jpg");
+    }
+    .slider .banner_text{
+      justify-content: flex-start;
+    }
+    .slider .banner_title {
+      font-size: 23px;
+      margin-top: 80px;
+    }
+    .slider .banner_subtitle {
+      font-size: 50px;
+    }
+    .slider .banner_content {
+      font-size: 25px;
+    }
+    .slider .banner_subcontent {
+      font-size: 20px;  
+    }
+  }
+
+</style>
+<section class="slider">
+  <div class="img" style='background-image: url("/media/main_1.jpg");'>
+    <div class="container banner_text">
+      <div>
+        <p class="banner_title">제품 제조 전문가 매칭 플랫폼</p>
+        <p class="banner_subtitle">나에게 딱 맞는 전문가에게 </br> 제조를 맡겨보세요</p>
+        <div class="banner_btn_box">
+          <div class="banner_btn" data-toggle="modal" data-target="#RequestModal">무료 의뢰하기</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="slider">
+  <a href="https://www.boltnnut.com/partner" class="img" style='background-image: url("/media/main_2.jpg");'>
+  </a>
+</section>
+<section class="slider">
+  <div class="img2">
+  </div>
+</section>
+<section class="slider">
+  <div class="img" style='background-image: url("/media/main_4.jpg");'>
+  </div>
+</section>
+
+<!--<script type="text/javascript">
+document.addEventListener("DOMContentLoaded", function() {
+  $(".slider").slick({
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: false,
+    autoplaySpeed: 2000,
+    arrows: false,
+  });
+});
+</script>

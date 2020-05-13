@@ -1,0 +1,150 @@
+<style>
+  #RequestModal .modal-footer{
+    overflow: hidden;
+  }
+  #RequestModalTitle {
+    text-align: center;
+  }
+  .file{
+  font-weight: bold;
+    border-radius: 20px;
+    border-color: #001655;
+    background: #fff;
+    color: #001655;
+    }
+   label{
+   font-weight : bold;
+   padding-top : 1vh;
+   padding-bottom : 1vh;
+   }
+   h5{
+   font-weight : bold;
+   }
+   .modal-header {
+   padding-left: 3vh;
+    padding-top: 2vh;
+    padding-right: 3vh;
+    }
+
+   .modal-body {
+    padding-left: 3vh;
+    padding-right: 3vh;
+    ]
+
+
+
+</style>
+<!-- Modal -->
+<div class="modal fade" id="RequestModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="RequestModalTitle">의뢰내용</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label for="biz_name">회사명 *</label>
+                <div class="input-group mb-2">
+                    <input id="biz_name" class="form-control" type="text" maxlength="30"/>
+                </div>
+                <label for="phone">전화번호 *</label>
+                <div class="input-group mb-2">
+                    <input id="phone" class="form-control" type="tel" maxlength="30"/>
+                </div>
+                <label for="email">이메일 *</label>
+                <div class="input-group mb-2">
+                    <input id="email" class="form-control" type="text" maxlength="30"/>
+                </div>
+                <label for="product">제작 원하는 제품 *</label>
+                <div class="input-group mb-2">
+                    <input id="product" class="form-control" type="text" maxlength="30"/>
+                </div>
+                <label for="budget">희망 프로젝트 예산 *</label>
+                <div class="input-group mb-2">
+                    <input id="budget" class="form-control" type="text" maxlength="30" placeholder="예) 1,000만원"/>
+                </div>
+                <label for="period">희망 프로젝트 기간 *</label>
+                <div class="input-group mb-2">
+                    <input id="period" class="form-control" type="text" maxlength="30" placeholder="예) 3개월"/>
+                </div>
+                <label>프로젝트 관련 파일 첨부</label>
+                <p id="file_name" class="mb-2" style="display: none; font-size: 13px;"></p>
+                <input id="Upload" type="file" hidden onchange="fileUpload(this)"/>
+                <div class="btn btn-primary w-100 file" onclick="clickUpload()">
+                    파일 업로드하기
+                </div>
+                <div class="alert alert-danger mb-0 mt-3" role="alert" style="display: none; border-radius: 0px;"></div>
+            </div>
+            <div class="modal-footer" style="padding-top: 2vh !important; border-top : 0vh !important">
+                <button type="button" class="btn btn-primary w-100" onclick="save()" style="height : 6vh; font-weight : bold; font-size : 2vh;" >의뢰하기</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+  function fileUpload(element) {
+    $("#file_name").text($(element)[0].files[0].name);
+    $("#file_name").css('display', 'block')
+  }
+  function clickUpload() {
+    $("#Upload").click()
+  }
+  async function save() {
+    var biz_name = $("input#biz_name").val()
+    var phone = $("input#phone").val()
+    var email = $("input#email").val()
+    var product = $("input#product").val()
+    var budget = $("input#budget").val()
+    var period = $("input#period").val()
+
+    var file = $("#Upload")[0].files[0]
+
+    console.log(`biz_name : ${biz_name}`)
+    console.log(`phone : ${phone}`)
+    console.log(`email : ${email}`)
+    console.log(`product : ${product}`)
+    console.log(`budget : ${budget}`)
+    console.log(`period : ${period}`)
+    
+    if (!biz_name || !email || !product || !phone || !budget || !period) {
+      await $(".alert-danger").css('display', 'block')
+      await $(".alert-danger").text("필수 사항들을 입력해주세요.")
+      return
+    }
+    else {
+      var formData = new FormData()
+      formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+      formData.append('biz_name', biz_name)
+      formData.append('email', email)
+      formData.append('phone', phone)
+      formData.append('product', product)
+      formData.append('budget', budget)
+      formData.append('period', period)
+      formData.append('file', file)
+
+      var request = new XMLHttpRequest()
+      request.open("POST", "{% url 'API:request' %}")
+      request.onload = function (e) {
+        if (request.readyState === request.DONE) {
+          if (request.status === 200) {
+            var res = JSON.parse(request.response)
+            if (res.status == 'success'){
+              location.href = '/'
+            }
+            else{
+              $(".alert-danger").css('display', 'block')
+              $(".alert-danger").text(res.message)
+            }
+          }
+        }
+      }
+      request.send(formData)
+    }
+  }
+
+
+</script>

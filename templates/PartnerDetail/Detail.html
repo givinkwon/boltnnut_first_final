@@ -1,0 +1,78 @@
+<style>
+  #Info p{
+    margin: 0;
+  }
+  #Info .img_wrapper {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    cursor: pointer;
+  }
+  #Info .img_wrapper:before {
+    content: "";
+    display: block;
+    margin-top: 60%;
+  }
+  #Info .img {
+    width: calc( 100% );
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-position: center;
+    background-size: cover;
+  }
+  .partner_name {
+    color: #001655;
+  }
+  .industry_box {
+    display: flex;
+  }
+  .text_box{
+    display: flex;
+    align-items: center;
+    color: #555;
+  }
+  #Info .phone_icon{
+    margin-left: auto;
+    margin-right: 5px;
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+    background-color: #001655;
+    background-position: center;
+    background-size: 70%;
+    background-repeat: no-repeat;
+    cursor: pointer;
+  }
+  .content_text {
+    white-space: pre-line;
+    /* white-space: pre; */
+  }
+  @media (max-width: 767.5px){
+    #Info .img {
+      margin-bottom: 15px;
+    }
+  }
+  @media (min-width: 768px){
+    
+  }
+</style>
+
+<div id="Info">
+  <div class="container">
+    <div class="row mt-5 mb-5">
+      <div class="col-12">
+        <p class="mt-4"><b>회사소개</b></p>
+        <p class="content_text mt-2">{{ partner.info }}</p>
+        <p class="mt-5"><b>주요 이력</b></p>
+        <p class="content_text mt-2">{{ partner.history }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+</script>

@@ -1,0 +1,161 @@
+{% extends 'Base/Base.html' %}
+
+{% block content %}
+<style>
+.navbar {
+  background-color: #fff !important;
+  box-shadow: 0px 0px 10px #0003;
+}
+.navbar-brand{
+  color: #222 !important;
+}
+.navbar-light .navbar-nav .nav-link{
+  color: #222 !important;
+}
+a.nav-link.search{
+    border-color: #222;
+  }
+#Star .title{
+  display: inline-block;
+  padding: 0 45px;
+  position: relative;
+  margin-bottom: 0;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  font-weight: bold;
+}
+#Star .title::before{
+  background: #a25ded;
+  content: "";
+  display: block;
+  height: 1px;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 30px;
+}
+#Star .title::after{
+  background: #a25ded;
+  content: "";
+  display: block;
+  height: 1px;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 30px;
+}
+#Star{
+  padding-top: 120px;
+}
+#Star .profile {
+  width: calc(100% - 30px);
+  max-width: 800px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#Star .img_wrapper {
+  display: inline-block;
+  position: relative;
+  max-width: 320px;
+  width: calc( 100% - 30px );
+}
+#Star .img_wrapper:before {
+  content: "";
+  display: block;
+  margin-top: 130%;
+}
+#Star .img {
+  width: calc( 100% - 10px );
+  margin-left: 5px;
+  margin-right: 5px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-position: center;
+  background-size: cover;
+}
+#Star .profile_title{
+  color: #555;
+  font-weight: bold;
+}
+#Star .profile_content{
+  color: #555;
+}
+</style>
+
+<div id="Star">
+  <div class="profile">
+    <div class="img_wrapper">
+      <div class="img" style="background-image: url('{{ star.img.url }}');"></div>
+    </div>
+    <h2 class="title mt-4">
+      {{ star.name }}
+    </h2>
+    <div class="row w-100 mt-4">
+      <div class="col-6">
+        <p class="profile_title">이름 :</p>
+      </div>
+      <div class="col-6">
+        <p class="profile_content">{{ star.name }}</p>
+      </div>
+      <div class="col-6">
+        <p class="profile_title">직업 :</p>
+      </div>
+      <div class="col-6">
+        <p class="profile_content">{{ star.job }}</p>
+      </div>
+      <div class="col-6">
+        <p class="profile_title">생년월일 :</p>
+      </div>
+      <div class="col-6">
+        <p class="profile_content">{{ star.birth }}</p>
+      </div>
+
+      <div class="col-6">
+        <p class="profile_title">소속사 :</p>
+      </div>
+      <div class="col-6">
+        <p class="profile_content">{{ star.entertainment }}</p>
+      </div>
+
+      <div class="col-6">
+        <p class="profile_title">그룹 :</p>
+      </div>
+      <div class="col-6">
+        <p class="profile_content">{{ star.group }}</p>
+      </div>
+
+      <div class="col-6">
+        <p class="profile_title">인스타 :</p>
+      </div>
+      <div class="col-6">
+        <a class="profile_content" href="{{ star.instagram }}" target="_blank">{{ star.instagram }}</a>
+      </div>
+
+      <div class="col-6">
+        <p class="profile_title">대표활동내역 :</p>
+      </div>
+      <div class="col-6">
+        <p class="profile_content m-0">{{ star.career|linebreaks }}</p>
+      </div>
+
+      <div class="col-6">
+        <p class="profile_title">코멘트 :</p>
+      </div>
+      <div class="col-6">
+        <p class="profile_content m-0">{{ star.comment|linebreaks }}</p>
+      </div>
+    </div>
+    <button type="button" class="btn btn-primary mt-4 mb-5" data-toggle="modal" data-target="#exampleModalCenter" style="width: 70%;">
+      매칭하기
+    </button>
+    {% include './Modal.html' %}
+  </div>
+</div>
+{% endblock content %}

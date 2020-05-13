@@ -1,0 +1,429 @@
+{% extends 'Base/Base.html' %}
+
+{% block content %}
+
+<style>
+  .navbar {
+    background-color: #fff !important;
+    box-shadow: 0px 0px 10px #0003;
+  }
+  .navbar-brand{
+    color: #222 !important;
+  }
+  .navbar-light .navbar-nav .nav-link{
+    color: #222 !important;
+  }
+  a.nav-link.search{
+    border-color: #222;
+  }
+  #signup .title{
+    display: inline-block;
+    padding: 0 45px;
+    position: relative;
+    margin-bottom: 0;
+    max-width: 100%;
+    overflow-wrap: break-word;
+  }
+  #signup .title::before{
+    background: #001655;
+    content: "";
+    display: block;
+    height: 1px;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 30px;
+  }
+  #signup .title::after{
+    background: #001655;
+    content: "";
+    display: block;
+    height: 1px;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 30px;
+  }
+  #signup {
+    padding: 130px 15px;
+  }
+  #signup .form {
+    max-width: 360px;
+    width: 100%;
+    margin: auto;
+  }
+  #signup label{
+    font-size: 15px;
+    font-weight: 600;
+  }
+  @media (max-width: 767.5px){
+    h1.title{
+      font-size: 23px;
+    }
+  }
+  @media (min-width: 768px){
+
+  }
+  .agreement_box {
+    display: flex;
+  }
+  .more_info{
+    text-decoration: underline;
+    cursor: pointer;
+    margin-left: auto;
+    font-size: 12px;
+  }
+  .user_type_box {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .type_btn {
+    cursor: pointer;
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    border: 2px solid #001655;
+  }
+  /* .type_btn:nth-of-type(1){
+    margin-right: 15px;
+  } */
+  .type_btn.active {
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    border: 2px solid #001655;
+    background-color: #001655;
+  }
+  .user_type_client {
+    background-size: 70%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url('/media/lightbulb_off.svg');
+  }
+  .user_type_client.active {
+    background-image: url('/media/lightbulb_on.svg');
+  }
+  .user_type_partner {
+    background-size: 70%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url('/media/clip_off.svg');
+  }
+  .user_type_partner.active {
+    background-image: url('/media/clip_on.svg');
+  }
+  .user_type_box > div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .user_type_box > div > p:nth-of-type(1){
+    margin-top: 8px;
+  }
+  .user_type_box > div > p:nth-of-type(2){
+    font-size: 12px;
+    text-align: center;
+  }
+  .only_partner {
+    display: none;
+  }
+</style>
+
+<div id="signup">
+  <div class="form">
+      <div style="display:flex; justify-content: center; align-items: center;">
+        <h1 class="title mb-5">회원가입</h1>
+      </div>
+      <div class="user_type_box">
+        <div>
+          <div class="type_btn user_type_client active" onclick="selectType(this)"></div>
+          <p><b>클라이언트</b></p>
+          <p>제조의뢰를 하고자 하는<br/>일반회원</p>
+        </div>
+        <div>
+          <div class="type_btn user_type_partner" onclick="selectType(this)"></div>
+          <p><b>파트너</b></p>
+          <p>제조의뢰를 수행할 수 있는<br/>전문가회원</p>
+        </div>
+      </div>
+      <label for="email">아이디(이메일) *</label>
+      <div class="input-group mb-2"> 
+        <input id="email" class="form-control" type="email"/>
+      </div>
+
+      <label for="password">비밀번호 *</label>
+      <div class="input-group mb-2">
+        <input id="password" class="form-control" type="password"/>
+      </div>
+
+      <label for="password2">비밀번호 확인 *</label>
+      <div class="input-group mb-2">
+        <input id="password2" class="form-control" type="password"/>
+      </div>
+      
+      <div class="only_partner">
+      <hr style="border: 0.5px dashed #ddd;"/>
+        
+      <label for="biz_name">사업자명 *</label>
+      <div class="input-group mb-2">
+        <input id="biz_name" class="form-control" type="text" maxlength="30"/>
+      </div>
+
+      <label>사업자번호 *</label>
+      <div class="input-group mb-2">
+        <input id="biz_num_1" class="form-control" type="tel" maxlength="3" style="width: 30%"/>
+        <input id="biz_num_2" class="form-control" type="tel" maxlength="2" style="width: calc( 30% - 10px ); margin: 0px 5px;"/>
+        <input id="biz_num_3" class="form-control" type="tel" maxlength="5" style="width: 40%"/>
+      </div>
+
+      <label>사업자등록증 첨부 *</label>
+      <p id="biz_file_name" class="mb-2" style="display: none; font-size: 13px;"></p>
+      <input id="bizUpload" type="file" hidden onchange="imgBizUpload(this)"/>
+      <div class="btn btn-primary w-100" onclick="clickBizUpload()">
+        업로드
+      </div>
+      </div>
+
+      <hr style="border: 0.5px dashed #ddd;"/>
+
+      <label>휴대폰 번호 *</label>
+      <div class="input-group mb-2">
+        <input id="phone_1" class="form-control" type="tel" maxlength="3" style="width: calc( 30% - 10px )"/>
+        <input id="phone_2" class="form-control" type="tel" maxlength="4" style="width: 35%; margin: 0px 5px;"/>
+        <input id="phone_3" class="form-control" type="tel" maxlength="4" style="width: 35%"/>
+      </div>
+
+      <div class="only_partner">
+      <label>회사소개서 및 포트폴리오 첨부 *</label>
+      <p id="portfolio_file_name" class="mb-2" style="display: none; font-size: 13px;"></p>
+      <input id="portfolioUpload" type="file" hidden onchange="imgPortfolioUpload(this)"/>
+      <div class="btn btn-primary w-100" onclick="clickPortfolioUpload()">
+        업로드
+      </div>
+      </div>
+
+      <hr style="border: 0.5px dashed #ddd;"/>
+      
+      <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input" id="exampleCheck1" onchange="agreement(this, 0)">
+        <label class="form-check-label" for="exampleCheck1">전체동의</label>
+      </div>
+      <div class="form-group form-check mb-1 agreement_box">
+        <input type="checkbox" class="form-check-input" id="exampleCheck2" onchange="agreement(this, 1)">
+        <label class="form-check-label" for="exampleCheck2">이용약관</label>
+        <a class="more_info" href = "/terms/" target="_blank">자세히보기</a>
+      </div>
+      <div class="form-group form-check agreement_box mb-5">
+        <input type="checkbox" class="form-check-input" id="exampleCheck3" onchange="agreement(this, 2)">
+        <label class="form-check-label" for="exampleCheck3">개인정보처리방침</label>
+        <a class="more_info" href = "/personal/" target="_blank">자세히보기</a>
+      </div>
+      <div class="alert alert-danger" role="alert" style="display: none; border-radius: 0px;"></div>
+      <div class="btn btn-primary w-100" onclick="save()">
+        회원가입
+      </div>
+  </div>
+</div>
+
+<script>
+  let user_type = 1
+  function selectType(element){
+    $('.type_btn').removeClass('active')
+    $(element).toggleClass('active')
+    if($(element).hasClass('user_type_client')){
+      $('.only_partner').css('display', 'none')
+      user_type = 1
+    }
+    else if($(element).hasClass('user_type_partner')){
+      $('.only_partner').css('display', 'block')
+      user_type = 2
+    }
+  }
+  function imgBizUpload(element){
+    $("#biz_file_name").text($(element)[0].files[0].name);
+    $("#biz_file_name").css('display', 'block')
+  }
+  function imgPortfolioUpload(element){
+    $("#portfolio_file_name").text($(element)[0].files[0].name);
+    $("#portfolio_file_name").css('display', 'block')
+  }
+  function clickBizUpload(){
+    $("#bizUpload").click()
+  }
+  function clickPortfolioUpload(){
+    $("#portfolioUpload").click()
+  }
+  function agreement(element, id){
+    var state = $(element).prop('checked')
+    if (id === 0){
+      $("#exampleCheck2").prop('checked', state)
+      $("#exampleCheck3").prop('checked', state)
+    }
+    else if (id === 1) {
+      var check_3 = $("#exampleCheck3").prop('checked')
+      if (check_3) {
+        $("#exampleCheck1").prop('checked', state)
+      }
+    }
+    else if (id === 2) {
+      var check_2 = $("#exampleCheck2").prop('checked')
+      if (check_2) {
+        $("#exampleCheck1").prop('checked', state)
+      }
+    }
+  }
+  function save(){
+    $("#Spinner").css('display', 'flex')
+    if(user_type === 1){
+      this.client_signup()
+    }
+    else {
+      this.partner_signup()
+    }
+  }
+  async function client_signup(){
+    var email = $("input#email").val()
+    var password = $("input#password").val()
+    var password2 = $("input#password2").val()
+    var phone = $("input#phone_1").val() + $("input#phone_2").val() + $("input#phone_3").val()
+    
+    var check_2 = $("#exampleCheck2").prop('checked')
+    var check_3 = $("#exampleCheck3").prop('checked')
+
+    console.log(`email : ${email}`)
+    console.log(`password : ${password}`)
+    console.log(`password2 : ${password2}`)
+    console.log(`phone : ${phone}`)
+    console.log(`check_2 : ${check_2}`)
+    console.log(`check_3 : ${check_3}`)
+    
+    var email_exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+    if (!email || !password || !password2 || !phone) {
+      await $(".alert-danger").css('display', 'block')
+      await $(".alert-danger").text("필수 사항들을 입력해주세요.")
+      return
+    }
+    else if (!check_2 || !check_3) {
+      await $(".alert-danger").css('display', 'block')
+      await $(".alert-danger").text("약관에 동의해주세요.")
+      return
+    }
+    else if(email_exptext.test(email) == false) { 
+      // 이메일 형식이 알파벳+숫자@알파벳+숫자.알파벳+숫자 형식이 아닐경우 
+      await $(".alert-danger").css('display', 'block')
+      await $(".alert-danger").text("이메일 형식이 올바르지 않습니다.")
+    }
+    else if (password != password2) {
+      await $(".alert-danger").css('display', 'block')
+      await $(".alert-danger").text("비밀번호가 일치하지 않습니다.")
+      return
+    }
+    else {
+      var formData = new FormData()
+      formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+      formData.append('type', 1)
+      formData.append('email', email)
+      formData.append('password', password)
+      formData.append('phone', phone)
+      var request = new XMLHttpRequest()
+      request.open("POST", "{% url 'API:signup' %}")
+      request.onload = function (e) {
+        if (request.readyState === request.DONE) {
+          if (request.status === 200) {
+            var res = JSON.parse(request.response)
+            if (res.status == 'success'){
+              location.href = '/signup/success'
+            }
+            else{
+              $(".alert-danger").css('display', 'block')
+              $(".alert-danger").text(res.message)
+            }
+          }
+        }
+      }
+      request.send(formData)
+    }
+  }
+
+  async function partner_signup(){
+    var email = $("input#email").val()
+    var password = $("input#password").val()
+    var password2 = $("input#password2").val()
+    var biz_name = $("input#biz_name").val()
+    var biz_num = $("input#biz_num_1").val() + $("input#biz_num_2").val() + $("input#biz_num_3").val()
+    var phone = $("input#phone_1").val() + $("input#phone_2").val() + $("input#phone_3").val()
+
+    var business_license = $("#bizUpload")[0].files[0]
+    var portfolio = $("#portfolioUpload")[0].files[0]
+
+    var check_2 = $("#exampleCheck2").prop('checked')
+    var check_3 = $("#exampleCheck3").prop('checked')
+
+    console.log(`email : ${email}`)
+    console.log(`password : ${password}`)
+    console.log(`password2 : ${password2}`)
+    console.log(`biz_name : ${biz_name}`)
+    console.log(`biz_num : ${biz_num}`)
+    console.log(`phone : ${phone}`)
+    console.log(`business_license : ${business_license}`)
+    console.log(`portfolio : ${portfolio}`)
+    console.log(`check_2 : ${check_2}`)
+    console.log(`check_3 : ${check_3}`)
+    
+    var email_exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+    if (!email || !password || !password2 || !biz_name || !biz_num || !phone || !business_license || !portfolio) {
+      await $(".alert-danger").css('display', 'block')
+      await $(".alert-danger").text("필수 사항들을 입력해주세요.")
+      return
+    }
+    else if (!check_2 || !check_3) {
+      await $(".alert-danger").css('display', 'block')
+      await $(".alert-danger").text("약관에 동의해주세요.")
+      return
+    }
+    else if(email_exptext.test(email) == false) { 
+      // 이메일 형식이 알파벳+숫자@알파벳+숫자.알파벳+숫자 형식이 아닐경우 
+      await $(".alert-danger").css('display', 'block')
+      await $(".alert-danger").text("이메일 형식이 올바르지 않습니다.")
+    }
+    else if (password != password2) {
+      await $(".alert-danger").css('display', 'block')
+      await $(".alert-danger").text("비밀번호가 일치하지 않습니다.")
+      return
+    }
+    else {
+      var formData = new FormData()
+      formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+      formData.append('type', 2)
+      formData.append('email', email)
+      formData.append('password', password)
+      formData.append('phone', phone)
+      formData.append('business_name', biz_name)
+      formData.append('business_number', biz_num)
+      formData.append('business_license', business_license)
+      formData.append('portfolio', portfolio)
+      
+      var request = new XMLHttpRequest()
+      request.open("POST", "{% url 'API:signup' %}")
+      request.onload = function (e) {
+        if (request.readyState === request.DONE) {
+          if (request.status === 200) {
+            var res = JSON.parse(request.response)
+            if (res.status == 'success'){
+              location.href = '/signup/success'
+            }
+            else{
+              $(".alert-danger").css('display', 'block')
+              $(".alert-danger").text(res.message)
+            }
+          }
+        }
+      }
+      request.send(formData)
+    }
+  }
+</script>
+{% endblock content %}

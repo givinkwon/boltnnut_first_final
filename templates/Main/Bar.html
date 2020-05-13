@@ -1,0 +1,52 @@
+<style>
+  #Bar {
+    width: 100%;
+    background-color: #001655;
+    padding: 15px 0;
+  }
+  #Bar p{
+    color: #fff;
+    font-size: 20px;
+    padding: 0px;
+    margin: 0px;
+  }
+  #Bar .btn{
+    background-color: #ED7D31;
+    cursor: pointer;
+    border-radius: 20px;
+    padding: 5px 15px;
+    color: #fff;
+  }
+  #Bar .btn:hover{
+    filter: brightness(0.95);
+  }
+  @media (max-width: 767.5px){
+    #Bar > div {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    #Bar .btn{
+      margin-top: 10px;
+    }
+  }
+  @media (min-width: 768px){
+    #Bar > div {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+    }
+    #Bar .btn{
+      margin-left: 20px;
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+  }
+</style>
+<div id="Bar">
+  <div class="container">
+    <p>프로젝트를 의뢰하고 싶다면?</p>
+    <div class="btn" data-toggle="modal" data-target="#RequestModal">무료 의뢰하기</div>
+  </div>
+</div>

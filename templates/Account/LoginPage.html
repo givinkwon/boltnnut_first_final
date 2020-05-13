@@ -1,0 +1,129 @@
+{% extends 'Base/Base.html' %}
+
+{% block content %}
+
+<style>
+  .navbar {
+    background-color: #fff !important;
+    box-shadow: 0px 0px 10px #0003;
+  }
+  .navbar-brand{
+    color: #222 !important;
+  }
+  .navbar-light .navbar-nav .nav-link{
+    color: #222 !important;
+  }
+  a.nav-link.search{
+    border-color: #222;
+  }
+  #login .title{
+    display: inline-block;
+    padding: 0 45px;
+    position: relative;
+    margin-bottom: 0;
+    max-width: 100%;
+    overflow-wrap: break-word;
+  }
+  #login .title::before{
+    background: #001655;
+    content: "";
+    display: block;
+    height: 1px;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 30px;
+  }
+  #login .title::after{
+    background: #001655;
+    content: "";
+    display: block;
+    height: 1px;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 30px;
+  }
+  #login {
+    padding: 130px 15px;
+  }
+  #login .form {
+    max-width: 360px;
+    width: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  @media (max-width: 767.5px){
+    h1.title{
+      font-size: 23px;
+    }
+  }
+  @media (min-width: 768px){
+
+  }
+</style>
+
+<div id="login">
+  <div class="form">
+      <h1 class="title mb-5">로그인</h1>
+      <div class="alert alert-danger w-100" role="alert" style="display: none; border-radius: 0px;"></div>
+      <input id="email" class="form-control mt-2" placeholder="아이디(이메일)" type="email"/>
+      <input id="password" class="form-control mt-2" placeholder="비밀번호" type="password"/>
+
+      <div class="btn btn-primary w-100 mt-4" onclick="toLogin()">
+        로그인
+      </div>
+      <div class="btn btn-white w-100 mt-2" onclick="location.href = '/signup/'">
+        회원가입
+      </div>
+  </div>
+</div>
+
+<script>
+  async function toLogin(){
+    var email = $("input#email").val()
+    var password = $("input#password").val()
+
+    var email_exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+
+    if (!email || !password) {
+      await $(".alert-danger").css('display', 'block')
+      await $(".alert-danger").text("빈칸을 채워주세요.")
+      return
+    }
+    else if(email_exptext.test(email) == false) { 
+      // 이메일 형식이 알파벳+숫자@알파벳+숫자.알파벳+숫자 형식이 아닐경우 
+      await $(".alert-danger").css('display', 'block')
+      await $(".alert-danger").text("이메일 형식이 올바르지 않습니다.")
+    }
+    else {
+      var formData = new FormData()
+      formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+      formData.append('email', email)
+      formData.append('password', password)
+
+      var request = new XMLHttpRequest()
+      request.open("POST", "{% url 'API:login' %}")
+      request.onload = function (e) {
+        if (request.readyState === request.DONE) {
+          if (request.status === 200) {
+            console.log(request.response)
+            var res = JSON.parse(request.response)
+            if (res.status == 'success'){
+              location.href = '/'
+            }
+            else{
+              $(".alert-danger").css('display', 'block')
+              $(".alert-danger").text(res.message)
+            }
+          }
+        }
+      }
+      request.send(formData)
+    }
+  }
+</script>
+{% endblock content %}

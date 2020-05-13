@@ -1,0 +1,113 @@
+<style>
+  .info_text {
+    font-size: 10px;
+    margin-bottom: 5px;
+  }
+  #exampleModalCenter .modal-footer{
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    background-color: #ed5565;
+  }
+</style>
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">매칭문의</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="mt-2 mb-2">
+          <div class="alert alert-danger" role="alert" style="display: none; border-radius: 0px;"></div>
+          <div style="display: flex;">
+              <input class="form-control" style="width: 50%;" type="text" placeholder="이름" id="name"/>
+              <input class="form-control ml-1" style="width: 100%;" type="text" placeholder="전화번호" id="phone"/>
+          </div>
+          <input class="form-control mt-1" type="text" placeholder="이메일" id="email"/>
+          <textarea class="form-control mt-1" placeholder="내용" rows="5" id="content"></textarea>
+        </div>
+        <div>
+          <p class="info_text">: 매니지먼트사의 최종 검토 및 결정에 의한 가능/불가능 답변은 업무일 기준 14일 이내 가입 시 등록하신 담당자 정보를 통해 연락 드립니다.</p>
+          <p class="info_text">: 연예인의 추천과 매칭의 조건 및 구체적인 내용은 제3자에게 공개되어서는 안되며, 이를 어길 시 불이익이 있을 수 있습니다. <a>이용약관 00조00항 참고</a></p>
+          <p class="info_text">: 매칭 결과와 조건 구성은 본 서비스를 통해서만 일시적인 현 시점<span id="now_date" style="font-weight: bold;"></span>에 한하여 협의가 가능한 조건이며 연예인이 소속된 매니지먼트사의 사정에 의해 사전 업데이트 없이 조건이 변동될 수 있는점 양해 바랍니다.</p>
+          <p class="info_text">: 매칭 결과는 계약이 성립되기 전이며 본 결과로 합의되지 않은 일방적인 상업적 행위는 법적 책임이 있을 수 있습니다.</p>
+        </div>
+      </div>
+      <div class="modal-footer" onclick="apply()">
+        <button type="button" class="btn btn-white" style="color: #ffffff;">문의하기</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  var dt = new Date();
+  var time = dt.getHours() + ":" + dt.getMinutes()
+  var month = dt.getMonth()+1;
+  var day = dt.getDate();
+
+  var output = "(" + dt.getFullYear() + '/' +
+      (month<10 ? '0' : '') + month + '/' +
+      (day<10 ? '0' : '') + day + " " + time + ")";
+  console.log(output)
+  $("#now_date").text(output)
+});
+
+async function apply(){
+  var name = $("#name").val()
+  var phone = $("#phone").val()
+  var email = $("#email").val()
+  var content = $("#content").val()
+
+  console.log(`name : ${name}`)
+  console.log(`phone : ${phone}`)
+  console.log(`email : ${email}`)
+  console.log(`content : ${content}`)
+
+  if (!name || !phone || !email || !content) {
+    await $(".alert-danger").css('display', 'block')
+    await $(".alert-danger").text("빈 칸을 입력해주세요.")
+    return
+  }
+  else {
+    var formData = new FormData()
+      formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+      formData.append('star_id', '{{ star.id }}')
+      formData.append('name', name)
+      formData.append('phone', phone)
+      formData.append('email', email)
+      formData.append('content', content)
+      
+      var request = new XMLHttpRequest()
+      request.open("POST", "{% url 'API:matching' %}")
+      request.onload = function (e) {
+        if (request.readyState === request.DONE) {
+          if (request.status === 200) {
+            var res = JSON.parse(request.response)
+            if (res.status == 'success'){
+              $('#exampleModalCenter').modal('hide')
+              $("#name").val('')
+              $("#phone").val('')
+              $("#email").val('')
+              $("#content").val('')
+              $(".alert-danger").empty()
+              $(".alert-danger").css('display', 'none')
+              alert('매칭문의 접수가 완료되었습니다.')
+            }
+            else{
+              $(".alert-danger").css('display', 'block')
+              $(".alert-danger").text(res.message)
+            }
+          }
+        }
+      }
+      request.send(formData)
+  }
+
+}
+</script>

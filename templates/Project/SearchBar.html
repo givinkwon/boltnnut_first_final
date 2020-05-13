@@ -1,0 +1,43 @@
+<style>
+  #SearchBar{
+  }
+  #SearchBar .to_list{
+    cursor: pointer;
+  }
+  #SearchBar .to_list:hover{
+    color: #001655;
+  }
+  #SearchBar .text_box{
+    display: flex;
+    align-items: center;
+  }
+  #SearchBar input{
+    width: 200px;
+  }
+  @media (max-width: 767.5px){
+
+  }
+  @media (min-width: 768px){
+
+  }
+</style>
+
+<div id="SearchBar">
+  <div class="mt-5 text_box container">
+    <p class="to_list mb-0" onclick="window.location.href = '/project/'">전체 게시물</p>
+    <img class="ml-auto mr-1" src="/media/search.svg" width="30"/>
+    <input id="search" type="text" class="form-control" placeholder="검색어를 입력하세요." onkeyup="search(this, event)"/>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  function search(i, e){
+    console.log(i)
+    console.log(i.value)
+    const q = i.value
+    if(e.key === "Enter"){
+      window.location.href = `/project?q=${q}`
+    }
+  }
+</script>

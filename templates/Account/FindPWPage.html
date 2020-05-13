@@ -1,0 +1,135 @@
+{% extends 'Base/Base.html' %}
+
+{% block content %}
+
+<style>
+  .navbar {
+    background-color: #fff !important;
+    box-shadow: 0px 0px 10px #0003;
+  }
+  .navbar-brand{
+    color: #222 !important;
+  }
+  .navbar-light .navbar-nav .nav-link{
+    color: #222 !important;
+  }
+  a.nav-link.search{
+    border-color: #222;
+  }
+  #find .title{
+    display: inline-block;
+    padding: 0 45px;
+    position: relative;
+    margin-bottom: 0;
+    max-width: 100%;
+    overflow-wrap: break-word;
+  }
+  #find .title::before{
+    background: #001655;
+    content: "";
+    display: block;
+    height: 1px;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 30px;
+  }
+  #find .title::after{
+    background: #001655;
+    content: "";
+    display: block;
+    height: 1px;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 30px;
+  }
+  #find {
+    padding: 130px 15px;
+  }
+  #find .form {
+    max-width: 360px;
+    width: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  @media (max-width: 767.5px){
+    h1.title{
+      font-size: 23px;
+    }
+    #find .text{
+      font-size: 11px;
+    }
+  }
+  @media (min-width: 768px){
+    #find .text{
+      font-size: 12px;
+    }
+  }
+  #find .text{
+    margin-top: 20px;
+    text-align: center;
+  }
+</style>
+
+<div id="find">
+  <div class="form">
+      <h1 class="title">비밀번호재설정</h1>
+      <p class="text">
+        아이디 또는 이메일을 입력하시면, 등록된 이메일로 비밀번호를<br/>재설정할 수 있는 링크를 보내드립니다.
+      </p>
+      <input class="form-control mt-5 mb-4" placeholder="아이디(이메일)" type="email" id="email"/>
+      <div class="alert alert-danger w-100 mb-2" role="alert" style="display: none; border-radius: 0px;"></div>
+
+      <div class="btn btn-primary w-100" onclick="sendEmail()">
+        비밀번호 재설정 
+      </div>
+  </div>
+</div>
+
+<script>
+  async function sendEmail(){
+    var email = $("input#email").val()
+
+    var email_exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+
+    if (!email) {
+      await $(".alert-danger").css('display', 'block')
+      await $(".alert-danger").text("빈칸을 채워주세요.")
+      return
+    }
+    else if(email_exptext.test(email) == false) { 
+      // 이메일 형식이 알파벳+숫자@알파벳+숫자.알파벳+숫자 형식이 아닐경우 
+      await $(".alert-danger").css('display', 'block')
+      await $(".alert-danger").text("이메일 형식이 올바르지 않습니다.")
+    }
+    else {
+      var formData = new FormData()
+      formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+      formData.append('email', email)
+
+      var request = new XMLHttpRequest()
+      request.open("POST", "{% url 'API:find_password' %}")
+      request.onload = function (e) {
+        if (request.readyState === request.DONE) {
+          if (request.status === 200) {
+            console.log(request.response)
+            var res = JSON.parse(request.response)
+            if (res.status == 'success'){
+              console.log(res)
+            }
+            else{
+              $(".alert-danger").css('display', 'block')
+              $(".alert-danger").text(res.message)
+            }
+          }
+        }
+      }
+      request.send(formData)
+    }
+  }
+</script>
+{% endblock content %}

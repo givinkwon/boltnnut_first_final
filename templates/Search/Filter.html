@@ -1,0 +1,358 @@
+<style>
+  #Filter {
+    padding: 20px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 20px;
+  }
+  .irs--flat .irs-handle>i:first-child{
+    width: 20px;
+    height: 20px;
+    margin-left: -10px;
+    border-radius: 10px;
+    border: 2px solid #da4453;
+    background-color: #fff;
+    cursor: pointer;
+  }
+  .irs--flat .irs-handle.state_hover>i:first-child, .irs--flat .irs-handle:hover>i:first-child {
+    background-color: #fff;
+  }
+  #Filter .filter_title {
+    font-weight: bold;
+  }
+  #Filter .filter_btn {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #999;
+    border-radius: 20px;
+    padding: 5px 8px;
+    height: 30px;
+    margin-right: 5px;
+    margin-top: 5px;
+  }
+  #Filter .filter_btn .img{
+    background-image: url('/media/ok_off.svg');
+    width: 16px;
+    height: 16px;
+    background-position: center;
+    background-size: cover;
+  }
+  #Filter .filter_btn p {
+    color: #999;
+    margin-bottom: 0px;
+    font-size: 12px;
+  }
+  #Filter .filter_btn.active {
+    border: 1px solid #ed5565;
+  }
+  #Filter .filter_btn.active .img {
+    background-image: url('/media/ok_on.svg');
+  }
+  #Filter .filter_btn.active p {
+    color: #ed5565;
+  }
+  #Filter .keyword {
+    border: 1px solid #999;
+    padding: 8px 10px;
+    display: flex;
+    align-items: center;
+    overflow: auto;
+  }
+  #Filter .keyword input {
+    border: 0px;
+    width: 100%;
+    font-size: 12px;
+    min-width: 120px;
+  }
+  #Filter .keyword .badge_list {
+    margin-right: 5px;
+    display: flex;
+  }
+  #Filter .keyword .badge {
+    background-color: #ed5565;
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 5px;
+    margin-bottom: 0px;
+    margin-right: 4px;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+  }
+  #Filter .keyword .badge img{
+    width: 15px;
+  }
+</style>
+
+<div id="Filter">
+    <div class="row">
+      <div class="col-12">
+        <p class="filter_title">예산 범위</p>
+        <div class="pl-2 pr-2">
+          <input type="text" class="js-range-slider" name="my_range" value="" />
+        </div>
+      </div>
+      <div class="col-lg-4 mt-3">
+          <p class="filter_title">활용범위</p>
+          <div style="display: flex; flex-wrap: wrap;">
+            <div class="filter_btn use_range {% if use_range == 1 %}active{% endif %}" onclick="useRange(this, 1)">
+              <div class="img"></div>
+              <p>온라인</p>
+            </div>
+            <div class="filter_btn use_range {% if use_range == 2 %}active{% endif %}" onclick="useRange(this, 2)">
+              <div class="img"></div>
+              <p>오프라인</p>
+            </div>
+            <div class="filter_btn use_range {% if use_range == 0 %}active{% endif %}" onclick="useRange(this, 0)">
+              <div class="img"></div>
+              <p>모두</p>
+            </div>
+          </div>
+      </div>
+      <div class="col-lg-8 mt-3">
+          <p class="filter_title">활용기간</p>
+          <div style="display: flex; flex-wrap: wrap;">
+            <div class="filter_btn period_range {% if period_range == 1 %}active{% endif %}" onclick="periodRange(this, 1)">
+              <div class="img"></div>
+              <p>1개월</p>
+            </div>
+            <div class="filter_btn period_range {% if period_range == 2 %}active{% endif %}" onclick="periodRange(this, 2)">
+              <div class="img"></div>
+              <p>3개월</p>
+            </div>
+            <div class="filter_btn period_range {% if period_range == 3 %}active{% endif %}"  onclick="periodRange(this, 3)">
+              <div class="img"></div>
+              <p>6개월</p>
+            </div>
+            <div class="filter_btn period_range {% if period_range == 4 %}active{% endif %}"  onclick="periodRange(this, 4)">
+              <div class="img"></div>
+              <p>1년</p>
+            </div>
+            <div class="filter_btn period_range {% if period_range == 0 %}active{% endif %}"  onclick="periodRange(this, 0)">
+              <div class="img"></div>
+              <p>그 이상</p>
+            </div>
+          </div>
+      </div>
+      <div class="col-lg-4 mt-3">
+          <p class="filter_title">사진촬영</p>
+          <div style="display: flex; flex-wrap: wrap;">
+            <div class="filter_btn take_photo {% if take_photo == -1 %}active{% endif %}" onclick="takePhoto(this, -1)">
+              <div class="img"></div>
+              <p>없음</p>
+            </div>
+            <div class="filter_btn take_photo {% if take_photo == 1 %}active{% endif %}" onclick="takePhoto(this, 1)">
+              <div class="img"></div>
+              <p>1회</p>
+            </div>
+            <div class="filter_btn take_photo {% if take_photo == 2 %}active{% endif %}" onclick="takePhoto(this, 2)">
+              <div class="img"></div>
+              <p>2회</p>
+            </div>
+            <div class="filter_btn take_photo {% if take_photo == 3 %}active{% endif %}"  onclick="takePhoto(this, 3)">
+              <div class="img"></div>
+              <p>3회</p>
+            </div>
+            <div class="filter_btn take_photo {% if take_photo == 0 %}active{% endif %}"  onclick="takePhoto(this, 0)">
+              <div class="img"></div>
+              <p>그 이상</p>
+            </div>
+          </div>
+      </div>
+
+      <div class="col-lg-4 mt-3">
+          <p class="filter_title">영상촬영</p>
+          <div style="display: flex; flex-wrap: wrap;">
+            <div class="filter_btn take_video {% if take_video == -1 %}active{% endif %}" onclick="takeVideo(this, -1)">
+              <div class="img"></div>
+              <p>없음</p>
+            </div>
+            <div class="filter_btn take_video {% if take_video == 1 %}active{% endif %}" onclick="takeVideo(this, 1)">
+              <div class="img"></div>
+              <p>1회</p>
+            </div>
+            <div class="filter_btn take_video {% if take_video == 2 %}active{% endif %}" onclick="takeVideo(this, 2)">
+              <div class="img"></div>
+              <p>2회</p>
+            </div>
+            <div class="filter_btn take_video {% if take_video == 3 %}active{% endif %}"  onclick="takeVideo(this, 3)">
+              <div class="img"></div>
+              <p>3회</p>
+            </div>
+            <div class="filter_btn take_video {% if take_video == 0 %}active{% endif %}"  onclick="takeVideo(this, 0)">
+              <div class="img"></div>
+              <p>그 이상</p>
+            </div>
+          </div>
+      </div>
+
+      <div class="col-lg-4 mt-3">
+          <p class="filter_title">음성녹음</p>
+          <div style="display: flex; flex-wrap: wrap;">
+            <div class="filter_btn take_audio {% if take_audio == -1 %}active{% endif %}" onclick="takeAudio(this, -1)">
+              <div class="img"></div>
+              <p>없음</p>
+            </div>
+            <div class="filter_btn take_audio {% if take_audio == 1 %}active{% endif %}" onclick="takeAudio(this, 1)">
+              <div class="img"></div>
+              <p>1회</p>
+            </div>
+            <div class="filter_btn take_audio {% if take_audio == 2 %}active{% endif %}" onclick="takeAudio(this, 2)">
+              <div class="img"></div>
+              <p>2회</p>
+            </div>
+            <div class="filter_btn take_audio {% if take_audio == 3 %}active{% endif %}"  onclick="takeAudio(this, 3)">
+              <div class="img"></div>
+              <p>3회</p>
+            </div>
+            <div class="filter_btn take_audio {% if take_audio == 0 %}active{% endif %}"  onclick="takeAudio(this, 0)">
+              <div class="img"></div>
+              <p>그 이상</p>
+            </div>
+          </div>
+      </div>
+      
+      <div class="col-12 mt-3">
+          <p class="filter_title">관련 키워드</p>
+          <div class="keyword mt-2">
+            <div class="badge_list"></div>
+            <input type="text" placeholder="띄어쓰기로 다수 키워드 입력 가능" onkeyup="textChange(this)"/>
+          </div>
+      </div>
+      <div class="pt-3 pr-3 pl-3 w-100">
+          <div class="btn btn-primary w-100" onclick="Search()">검색하기</div>
+      </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+var price_from = 0
+var price_to = 50000000
+var use_range = 0
+var period_range = 1
+var take_photo = 1
+var take_video = 1
+var take_audio = 1
+
+document.addEventListener("DOMContentLoaded", function() {
+  window.addEventListener("keyup", textChange, false);
+  $(".js-range-slider").ionRangeSlider({
+    type: "double",
+    min: 0,
+    max: 50000000,
+    step: 1000000,
+    from: parseInt('{{ min_budget }}'),
+    to: parseInt('{{ max_budget }}'),
+    grid: true,
+    prefix: "￦ ",
+    onChange: function (data) {
+      setSlider(data)
+    }
+  });
+  console.log(parseInt('{{ min_budget }}'))
+  console.log(parseInt('{{ max_budget }}'))
+  
+  price_from = parseInt('{{ min_budget }}')
+  price_to = parseInt('{{ max_budget }}')
+  use_range = parseInt('{{ use_range }}')
+  period_range = parseInt('{{ period_range }}')
+  take_photo = parseInt('{{ take_photo }}')
+  take_video =  parseInt('{{ take_video }}')
+  take_audio = parseInt('{{ take_audio }}')
+  
+  var keywords = "{{ keyword }}"
+  console.log(`keyword : ${keywords}`)
+  console.log(keywords)
+  if (keywords) {
+    for ( var keyword of keywords.split(',')) {
+      var badge_text = `
+        <div class="badge" onclick="deleteBadge(this)">
+          <p class="mr-1 mb-0">${keyword}</p>
+          <img src="/media/close.svg"/>
+        </div>
+      `
+      $(".badge_list").append(badge_text)
+    }
+  }
+  
+});
+
+function setSlider(data){
+  price_from = data.from
+  price_to = data.to
+}
+function useRange(element, id){
+  $('.use_range').removeClass('active')
+  $(element).addClass('active')
+  use_range = id
+}
+
+function periodRange(element, id){
+  $('.period_range').removeClass('active')
+  $(element).addClass('active')
+  period_range = id
+}
+
+function takePhoto(element, id){
+  $('.take_photo').removeClass('active')
+  $(element).addClass('active')
+  take_photo = id
+}
+
+function takeVideo(element, id){
+  $('.take_video').removeClass('active')
+  $(element).addClass('active')
+  take_video = id
+}
+
+function takeAudio(element, id){
+  $('.take_audio').removeClass('active')
+  $(element).addClass('active')
+  take_audio = id
+}
+
+function deleteBadge(element){
+  $(element).remove()
+}
+function textChange(e){
+  var message = $(".keyword input").val().replace(' ', '')
+  $(".keyword input").val(message)
+  if (message.length > 0 && ( e.key == 'Enter' || e.key == ' ') ){
+    var badge_text = `
+      <div class="badge" onclick="deleteBadge(this)">
+        <p class="mr-1 mb-0">${message}</p>
+        <img src="/media/close_white.svg"/>
+      </div>
+    `
+    $(".badge_list").append(badge_text)
+    $(".keyword input").val('')
+  }
+}
+
+function Search(){
+  console.log('{{ request.user.is_authenticated }}')
+  console.log(price_from)
+  console.log(price_to)
+  console.log(use_range)
+  console.log(period_range)
+  console.log(take_photo)
+  console.log(take_video)
+  console.log(take_audio)
+  var auth = '{{ request.user.is_authenticated }}'
+  var badges = $('.badge')
+  var badge_list = []
+  for ( var i of badges){
+    badge_list.push($(i).find('p').text())
+  }
+  console.log(badge_list)
+  if (auth != 'False'){
+    location.href = `/search/?minBudget=${price_from}&maxBudget=${price_to}&use=${use_range}&period=${period_range}&photo=${take_photo}&video=${take_video}&audio=${take_audio}&keyword=${badge_list.toString()}`
+  }
+  else {
+    alert('로그인 후 이용 가능합니다')
+  }
+}
+</script>

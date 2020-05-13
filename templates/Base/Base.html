@@ -1,0 +1,357 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+    <meta charset='UTF-8'>
+    <title>{{ title }}</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1'>
+    <meta name="naver-site-verification" content="aef03581f2cbf61bac0dfddc7f44dc4f07859c06"/>
+    <link rel="shortcut icon" href="{% static 'media/favicon.png' %}" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,500,700,900&display=swap" rel="stylesheet">
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.0/css/swiper.min.css">   
+    <link rel="stylesheet" type="text/css" href="{% static 'slick/slick.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'slick/slick-theme.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'ion.rangeSlider/css/ion.rangeSlider.min.css' %}">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-109296624-3"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-109296624-3');
+    </script> -->
+</head>
+<body onload="finishLoad()">
+<style>
+.modal-open .modal {
+    top: 0;
+    bottom: 0;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+.no-scroll, .no-scroll body {
+    overflow: hidden;
+}
+.modal-content {
+    max-width: 500px;
+    margin: 0 auto;
+}
+.modal-footer {
+    padding-bottom: 1.5rem;
+}
+.btn{
+    border-radius: 0px;
+}
+p, h1, h2, h3, h4, h5, span, a{
+    word-break: keep-all;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+/* 가운데 정렬 */
+.outer {
+    display: table;
+    height: 100%;
+    margin: auto;
+    text-align: left;
+}
+.middle {
+    display: table-cell;
+    vertical-align: middle;
+}
+.inner {
+    margin-left: auto;
+    margin-right: auto;
+}
+/* 버튼 커스터마이징 */
+.btn{
+    cursor: pointer;
+}
+.btn-gray{
+    background-color: #d8d8d8;
+    border-color: #d8d8d8;
+    color: #666666;
+}
+.btn-gray:hover{
+    background-color: #bebebe;
+    border-color: #bebebe;
+    color: #666666;
+}
+.btn-dark{
+    background-color: #333333;
+    border-color: #333333;
+}
+.btn-dark:hover{
+    background-color: #222222;
+    border-color: #222222;
+}
+.btn-primary{
+    background-color: #001655;
+    border-color: #001655;
+}
+.btn-primary:focus{
+    -webkit-box-shadow: none;
+            box-shadow: none;
+}
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle{
+    background-color: #001655;
+    border-color: #001655;
+}
+.btn-primary:hover{
+    background-color: #001655;
+    border-color: #001655;
+    opacity: 0.9;
+}
+.btn-secondary{
+    background-color: rgb(111, 74, 210);
+    border-color: rgb(111, 74, 210);
+}
+.btn-secondary:focus{
+    -webkit-box-shadow: none;
+            box-shadow: none;
+}
+.btn-secondary:not(:disabled):not(.disabled).active, .btn-secondary:not(:disabled):not(.disabled):active, .show>.btn-secondary.dropdown-toggle{
+    background-color: rgb(87, 57, 167);
+    border-color: rgb(87, 57, 167);
+}
+.btn-secondary:hover{
+    background-color: rgb(87, 57, 167);
+    border-color: rgb(87, 57, 167);
+}
+.btn-outline-secondary{
+    background-color: rgb(255, 255, 255);
+    border-color: rgb(111, 74, 210);
+    color:rgb(111, 74, 210);
+}
+.btn-outline-secondary:focus{
+    -webkit-box-shadow: none;
+            box-shadow: none;
+}
+.btn-outline-secondary:not(:disabled):not(.disabled).active, .btn-outline-secondary:not(:disabled):not(.disabled):active, .show>.btn-outline-secondary.dropdown-toggle{
+    background-color: rgb(245, 245, 245);
+    border-color: rgb(87, 57, 167);
+    color:rgb(111, 74, 210);
+}
+.btn-outline-secondary:hover{
+    background-color: rgb(245, 245, 245);
+    border-color: rgb(87, 57, 167);
+    color:rgb(111, 74, 210);
+}
+.btn-secondary.disabled, .btn-secondary:disabled {
+    color: #bbbbbb;
+    background-color: #ededed;
+    border-color: #ededed;
+}
+.btn-secondary.disabled:hover, .btn-secondary:disabled:hover {
+    color: #bbbbbb;
+    background-color: #ededed;
+    border-color: #ededed;
+}
+.btn:focus{
+    -webkit-box-shadow: none;
+            box-shadow: none;
+}
+.modal-content{
+    border: 0px;
+}
+.modal .btn-confirm{
+    margin: 0px;
+    background-color: rgba(0,0,0,0);
+    border-color: rgba(0,0,0,0);
+    color:rgb(0, 205, 189);
+}
+.modal .btn-cancle{
+    margin: 0px;
+    background-color: rgba(0,0,0,0);
+    border-color: rgba(0,0,0,0);
+    color:#666666;
+}
+.modal-footer{
+    padding: 0px;
+}
+input:focus{
+    -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+    border-color: #ced4da !important;
+}
+::-webkit-input-placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #bbbbbb !important;
+    opacity: 1; /* Firefox */
+}
+:-ms-input-placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #bbbbbb !important;
+    opacity: 1; /* Firefox */
+}
+::-ms-input-placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #bbbbbb !important;
+    opacity: 1; /* Firefox */
+}
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #bbbbbb !important;
+    opacity: 1; /* Firefox */
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #bbbbbb !important;
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: #bbbbbb !important;
+}
+.form-control:disabled, .form-control[readonly] {
+    background-color: #f1f1f1;
+    border: solid 1px #d5d5d5;
+    opacity: 1;
+}
+.form-control{
+    border: 1px solid #d5d5d5 !important;
+    color:#222222 !important;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 3px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+background: #f1f1f1;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+background: #bbbbbb;
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+background: #888888;
+}
+@media (max-width: 575.98px) {
+    /* width */
+    ::-webkit-scrollbar {
+        height: 3px;
+    }
+}
+.modal-open{
+    position: relative;
+}
+@media (max-width: 500px){
+    .modal-dialog {
+        margin: 1.3rem .7rem !important;
+    }
+
+}
+@media (max-width: 767.5px){
+    .PC_View{
+        display: none;
+    }
+    .Mobile_View{
+        display: block;
+    }
+}
+@media (min-width: 768px){
+    .PC_View{
+        display: block;
+    }
+    .Mobile_View{
+        display: none;
+    }
+}
+input {
+    border-radius: 0px !important;
+}
+input:focus {
+    border: 0px;
+    outline: none;
+}
+button:focus{
+    outline: none;
+}
+</style>
+<!-- <div class='outer'>
+<div class='middle'>
+<div class='inner'>
+    가운데 정렬하고 싶은 아이템들
+</div>
+</div>
+</div> -->
+
+{% include './Header.html' %}
+{% include './Spinner.html' %}
+
+{% block content %}
+
+{% endblock content %}
+
+<div class="PC_View">
+    {% include './Footer_pc.html' %}
+</div>
+<div class="Mobile_View">
+    {% include './Footer_mobile.html' %}
+</div>
+
+</body>
+<script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js'></script>
+<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js'></script>
+<script src='https://unpkg.com/sweetalert/dist/sweetalert.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js'></script>
+
+<script src='{% static "cookie/jquery.cookie.js" %}'></script>
+<script src="{% static 'slick/slick.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'countTo.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'ion.rangeSlider/js/ion.rangeSlider.min.js' %}" type="text/javascript" charset="utf-8"></script>
+
+
+<script>
+    function finishLoad(){
+        setTimeout(function(){
+            $("#Spinner").css('display', 'none')
+        }, 500);
+    }
+</script>
+<!-- Channel Plugin Scripts -->
+<script>
+    (function() {
+      var w = window;
+      if (w.ChannelIO) {
+        return (window.console.error || window.console.log || function(){})('ChannelIO script included twice.');
+      }
+      var d = window.document;
+      var ch = function() {
+        ch.c(arguments);
+      };
+      ch.q = [];
+      ch.c = function(args) {
+        ch.q.push(args);
+      };
+      w.ChannelIO = ch;
+      function l() {
+        if (w.ChannelIOInitialized) {
+          return;
+        }
+        w.ChannelIOInitialized = true;
+        var s = document.createElement('script');
+        s.type = 'text/javascript';
+        s.async = true;
+        s.src = 'https://cdn.channel.io/plugin/ch-plugin-web.js';
+        s.charset = 'UTF-8';
+        var x = document.getElementsByTagName('script')[0];
+        x.parentNode.insertBefore(s, x);
+      }
+      if (document.readyState === 'complete') {
+        l();
+      } else if (window.attachEvent) {
+        window.attachEvent('onload', l);
+      } else {
+        window.addEventListener('DOMContentLoaded', l, false);
+        window.addEventListener('load', l, false);
+      }
+    })();
+    ChannelIO('boot', {
+      "pluginKey": "ec3d75f3-0b9e-4b01-a746-dfed77e31339"
+    });
+  </script>
+  <!-- End Channel Plugin -->
+</html>

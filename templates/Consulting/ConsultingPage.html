@@ -1,0 +1,31 @@
+{% extends 'Base/Base.html' %}
+
+{% block content %}
+<style>
+  #request {
+    background-color: #031e53;
+  }
+  #request img{
+    width: 100%;
+  }
+  @media (max-width: 767.5px){
+    #request {
+      padding-top: 60px;
+    }
+  }
+  @media (min-width: 768px){
+    #request {
+      padding-top: 80px;
+    }
+  }
+</style>
+
+<div id="request">
+  <div class="container">
+    <img class="PC_View" src="/media/consulting.png"/>
+    <img class="Mobile_View" src="/media/consulting.png"/>
+  </div>
+</div>
+
+
+{% endblock content %}

@@ -1,0 +1,152 @@
+{% load static %}
+<style>
+    nav.navbar {
+        position: fixed;
+        width: 100%;
+        z-index: 1000;
+        background-color: #ffffff !important;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .navbar-light .navbar-nav .nav-link{
+        font-size: 16px;
+        font-weight: bold;
+        color: #000;
+    }
+    .nav-link:hover{
+        color: #001655 !important;
+    }
+    .user {
+        display: flex;
+        width: 200px;
+        justify-content: flex-end;
+        align-items: center;
+    }
+    .auth_btn {
+        padding: 5px 10px;
+        cursor: pointer;
+        display: flex;
+    }
+    .avatar {
+        width: 30px;
+        height: 30px;
+        border-radius: 20px;
+        background-image:url("/media/profile.png");
+        background-position: center;
+        background-size: cover;
+        margin-right: 10px;
+    }
+    .nickname {
+        margin: 0px;
+        margin-top: 3px;
+    }
+    @media (max-width: 991.5px){
+        nav.navbar {
+            height: 70px;
+        }
+        .user_pc{
+            display: none !important;
+        }
+        .user_mobile{
+            display: flex !important;
+            justify-content: flex-end;
+            padding: 10px 0;
+        }
+        .navbar-collapse {
+            background: rgb(255, 255, 255);
+            width: 100%;
+            position: absolute;
+            top: 70px;
+            left: 0px;
+            padding: 0px 50px;
+            box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.1);
+        }
+        .navbar-brand img{
+            width: 160px;
+        }
+    }
+    @media (min-width: 992px){
+        .navbar-expand-lg .navbar-nav .nav-link{
+            padding-left: 14px;
+            padding-right: 14px;
+        }
+        nav.navbar {
+            height: 80px;
+        }
+        .user_pc{
+            display: flex !important;
+        }
+        .user_mobile{
+            display: none !important;
+        }
+        .navbar-brand img{
+            width: 200px;
+        }
+    }
+    .navbar-light .navbar-toggler{
+        border: 0px;
+    }
+</style>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <img src="/media/logo.png" width="200"/>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class='navbar-nav ml-auto mr-auto container' style="justify-content: center;">
+               <!-- <li class='nav-item'>
+                    <a class='nav-link' href='/request'>의뢰하기</a>
+                </li> -->
+                <li class='nav-item'>
+                    <a class='nav-link' href='/partner'>제조사 찾기</a>
+                </li>
+                <li class='nav-item'>
+                    <a class='nav-link' href='/project'>프로젝트 목록</a>
+                </li>
+                <!--<li class='nav-item'>
+                    <a class='nav-link' href='/consulting'>양산 컨설팅 의뢰</a>
+                </li>-->
+                <li class='nav-item'>
+                    <a class='nav-link' href='/product'>시제품 제작 의뢰</a>
+                </li>
+                {% if not request.user.is_authenticated %}
+                <li class="user_mobile">
+                    <div class="user">
+                        <div class="auth_btn" onclick="window.location.href='/login'">
+                            <div class="avatar"></div>
+                            <p class="nickname">Log In</p>
+                        </div>
+                    </div>
+                </li>
+                {% else %}
+                <li class="user_mobile">
+                    <div class="user">
+                        <div class="auth_btn" onclick="window.location.href='/logout'">
+                            <div class="avatar"></div>
+                            <p class="nickname">{{request.user}}</p>
+                        </div>
+                    </div>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+        {% if not request.user.is_authenticated %}
+        <div class="user user_pc">
+            <div class="auth_btn" onclick="window.location.href='/login'">
+                <div class="avatar"></div>
+                <p class="nickname">Log In</p>
+            </div>
+        </div>
+        {% else %}
+        <div class="user user_pc">
+            <div class="auth_btn" onclick="window.location.href='/logout'">
+                <div class="avatar"></div>
+                <p class="nickname">{{request.user}}</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</nav>

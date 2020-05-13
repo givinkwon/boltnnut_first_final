@@ -1,0 +1,209 @@
+<style>
+  #Content div{
+    overflow: hidden;
+    background-position: center;
+    background-size: cover;
+  }
+  #Content .img_wrapper {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    cursor: pointer;
+  }
+  #Content .img_wrapper:before {
+    content: "";
+    display: block;
+    margin-top: 60%;
+  }
+  #Content .img {
+    width: calc( 100% - 10px );
+    margin-right: 5px;
+    margin-left: 5px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-position: center;
+    background-size: cover;
+  }
+  .title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #001655;
+  }
+  #Content .title {
+    margin-top: 8px;
+    margin-bottom: 0px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow-wrap: break-word;
+  }
+  #Content .more{
+    text-align: right;
+    font-weight: bold;
+    color: #001655 !important;
+    cursor: pointer;
+    margin-bottom: 5px;
+  }
+  #Content .more:hover{
+    filter: brightness(0.8);
+  }
+  .slide_btn{
+    width: 30px;
+    height: 30px;
+    background-color: #00000055;
+    position: absolute;
+    top: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  .slide_btn.left{
+    left: 0;
+  }
+  .slide_btn.right{
+    right: 0;
+  }
+  .main_title{
+    font-size: 30px;
+    font-weight: bold;
+    margin: 0;
+  }
+  #Content .content_title{
+    color: #000;
+    margin-bottom: 2px;
+    font-weight: bold;
+  }
+  #Content .content_text{
+    color: #333;
+  }
+  @media (max-width: 767.5px){
+    #Content .content_text {
+      font-size: 10px;
+    }
+    #Content .content_title{
+      font-size: 10px;
+    }
+    .main_sub_title{
+      font-size: 14px;
+    }
+  }
+  @media (min-width: 768px){
+    #Content .content_text {
+      font-size: 13px;
+    }
+    #Content .content_title{
+      font-size: 13px;
+    }
+    .main_sub_title{
+      font-size: 18px;
+    }
+  }
+  #Content .item {
+    width: calc( 100% - 16px ) !important;
+    margin: 8px;
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+    padding: 10px;
+  }
+  .industry_box {
+    display: flex;
+  }
+  .industry {
+    color: #000;
+    font-weight: bold;
+  }
+  #Content .title_box{
+    display: flex;
+    align-items: center;
+  }
+  #Content .title_box .phone_icon{
+    margin-left: auto;
+    margin-right: 5px;
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+    background-color: #001655;
+    background-position: center;
+    background-size: 70%;
+    background-repeat: no-repeat;
+    cursor: pointer;
+  }
+  .partner_badge{
+    margin-left: auto;
+    width: 95px;
+    height: 26px;
+    background-color: #001655;
+    color: #fff;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+</style>
+
+<div class="container" style="margin-top: 30px; position: relative">
+  <p class="main_title">Bolt&Nut Database</p>
+  <p class="main_sub_title">검증된 제조 전문가에게 제품 제작을 의뢰해보세요</p>
+  <div>
+    <section id="Content" class="mt-5 mb-5">
+      {% for partner in partners %}
+      <div class="item">
+        <div class="img_wrapper" onclick="location.href = '/partner/{{partner.id}}'">
+          <div class="img" style="background-image: url('{{partner.thumbnail.url}}');"></div>
+        </div>
+        <div class="title_box">
+          <p class="title">{{ partner.name }}</p>
+          {% if partner.is_partner %}
+          <div class="partner_badge">Bolt&Nut 전문 제조사</div>
+          {% endif %}
+        </div>
+        <div class="industry_box">
+          {% for industry in partner.industry.all %}
+            <p class="industry mr-3">{{ industry }}</p>
+          {% endfor %}
+        </div>
+        <p class="content_title">진행한제품</p>
+        <p class="content_text">
+          {{ partner.products|striptags }}
+        </p>
+        <p class="content_title">특화제품</p>
+        <p class="content_text">
+          {{ partner.special|striptags }}
+        </p>
+        <hr/>
+        <p class="content_text more mr-3" onclick="location.href = '/partner/{{partner.id}}'">-> 더 알아보기</p>
+      </div>
+      {% endfor %}
+    </section>
+    <div class="slide_btn left" onClick="contentPrev()">
+      <img src="/media/chevron-left.svg"/>
+    </div>
+    <div class="slide_btn right" onClick="contentNext()">
+      <img src="/media/chevron-right.svg"/>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+document.addEventListener("DOMContentLoaded", function() {
+  var content = $("#Content").slick({
+    dots: false,
+    infinite: true,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    arrows: false,
+  });
+  $("#Content .content_text").prop('style', 'overflow: hidden; text-overflow: ellipsis; display: -webkit-box;-webkit-line-clamp: 2; -webkit-box-orient: vertical; word-wrap:break-word;')
+});
+function contentPrev(){
+  $('#Content').slick('slickPrev');
+}
+function contentNext(){
+  $('#Content').slick('slickNext');
+}
+</script>

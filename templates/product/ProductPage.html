@@ -1,0 +1,40 @@
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-162026812-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-162026812-1');
+</script>
+{% extends 'Base/Base.html' %}
+
+{% block content %}
+<style>
+  #request {
+    background-color: #031e53;
+  }
+  #request img{
+    width: 100%;
+  }
+  @media (max-width: 767.5px){
+    #request {
+      padding-top: 60px;
+    }
+  }
+  @media (min-width: 768px){
+    #request {
+      padding-top: 80px;
+    }
+  }
+</style>
+
+<div id="request">
+  <div class="container">
+    <img class="PC_View" src="/media/consulting_1.png"/>
+    <img class="Mobile_View" src="/media/consulting_1.png"/>
+  </div>
+</div>
+
+
+{% endblock content %}

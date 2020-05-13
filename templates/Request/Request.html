@@ -1,0 +1,250 @@
+<style>
+ body{
+ background-color : #fff;
+ }
+ #RequestModal{
+ margin : 10vh 40vh 10vh 40vh;
+ background-color : #fff;
+ border-radius : 5vh;
+ box-shadow :  0px 9px 50px 12px rgba(0,0,0,0.1);
+ }
+
+ label{
+  margin : 2vh 0vh 2vh 0vh;
+  font-weight : bold;
+  font-size : 2vh
+ }
+
+ .btn{
+  width : 40vh;
+ }
+ .submit{
+  text-align : center;
+ }
+ button[type=button]{
+  margin-top : 10vh;
+  margin-bottom : 10vh;
+  width : 60vh;
+  height : 15vh;
+  font-weight : bold;
+  font-size : 5vh;
+
+ }
+ .content{
+    display: table;
+    width: 100%;
+    height: 110px;
+    background: linear-gradient(to right, #001655, #02029A);
+    color: #fff;
+    font-size: 24px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 20px 20px 0 0;
+}
+</style>
+<div id="RequestModal">
+    <div class="content" style="padding-top : 4vh; font-size : 2vh;">작성하신 제안서를 분석하여 최적의 제조사를 매칭해드립니다.</div>
+    <div>
+    <div>
+      <div>
+        <label for="biz_name">회사명 *</label>
+        <div class="input-group mb-2 w-50">
+         <input id="biz_name" class="form-control" type="text" maxlength="30"/>
+        </div>
+        <label for="phone">전화번호</label>
+        <div class="input-group mb-2 w-50">
+          <input id="phone" class="form-control" type="text" maxlength="30"/>
+        </div>
+        <label for="email">이메일 *</label>
+        <div class="input-group mb-2 w-50">
+          <input id="email" class="form-control" type="text" maxlength="30"/>
+        </div>
+        <label for="product">제작 원하는 제품명 *</label>
+        <div class="input-group mb-2 w-50">
+          <input id="product" class="form-control" type="text" maxlength="30"/>
+        </div>
+        <label for="budget">희망 예산</label>
+        <div class="input-group mb-2 w-50">
+          <input id="budget" class="form-control" type="text" maxlength="30" placeholder="예) 1,000만원"/>
+        </div>
+        <label for="period">희망 기간</label>
+        <div class="input-group mb-2 w-50">
+          <input id="period" class="form-control" type="text" maxlength="30" placeholder="예) 3개월"/>
+        </div>
+        <label for="amount">희망 수량</label>
+        <div class="input-group mb-2 w-50">
+          <input id="amount" class="form-control" type="text" maxlength="30" placeholder="예) MOQ 5000개"/>
+        </div>
+        <label for="price">희망 예산 범위</label>
+        <div class="input-group mb-2 w-50clsrn82
+">
+          <input id="price" class="form-control" type="text" maxlength="30" placeholder="예) 1500 - 2500만원 내외"/>
+        </div>
+
+        <label>의뢰 분야</label>
+        <div id = "category_1" class="input-group">
+          <h6>설계분야</h6>
+             <div class="col-md-2">
+             <input type="checkbox" name="color" value="blue"> 디자인
+             </div>
+             <div class="col-md-2">
+             <input type="checkbox" name="color" value="blue"> 회로설계
+             </div>
+             <div class="col-md-2">
+             <input type="checkbox" name="color" value="blue"> 기구설계
+             </div>
+             <div class="col-md-2">
+             <input type="checkbox" name="color" value="blue"> 기계설계
+             </div>
+        </div>
+        <div id = "category_2" class="input-group">
+          <h6>목업분야</h6>
+             <div class="col-md-2">
+             <input type="checkbox" name="color" value="blue"> 3D프린팅
+             </div>
+             <div class="col-md-2">
+             <input type="checkbox" name="color" value="blue"> 플라스틱가공
+             </div>
+             <div class="col-md-2">
+             <input type="checkbox" name="color" value="blue"> 금속가공
+             </div>
+             <div class="col-md-2">
+             <input type="checkbox" name="color" value="blue"> 진공주형
+             </div>
+        </div>
+        <div id = "category_3" class="input-group">
+          <h6>양산분야</h6>
+             <div class="col-md-2">
+             <input type="checkbox" name="color" value="blue"> 금속가공
+             </div>
+             <div class="col-md-2">
+             <input type="checkbox" name="color" value="blue"> 금속/사출
+             </div>
+             <div class="col-md-2">
+             <input type="checkbox" name="color" value="blue"> 주물
+             </div>
+             <div class="col-md-2">
+             <input type="checkbox" name="color" value="blue"> 진공성형
+             </div>
+        </div>
+
+        <label>제품 분야</label>
+        <div id = "subclass" class="input-group mb-2">
+             <div class="col-md-4">
+             <input type="checkbox" name="color" value="blue"> 의료용품
+             </div>
+             <div class="col-md-4">
+             <input type="checkbox" name="color" value="blue"> 주방용품
+             </div>
+             <div class="col-md-4">
+             <input type="checkbox" name="color" value="blue"> 생활용품
+             </div>
+             <div class="col-md-4">
+             <input type="checkbox" name="color" value="blue"> 유아용품
+             </div>
+             <div class="col-md-4">
+             <input type="checkbox" name="color" value="blue"> 가구/홈/데코
+             </div>
+             <div class="col-md-4">
+             <input type="checkbox" name="color" value="blue"> 가전디지털
+             </div>
+             <br>
+             <div class="col-md-4">
+             <input type="checkbox" name="color" value="blue"> 스포츠
+             </div>
+             <div class="col-md-4">
+             <input type="checkbox" name="color" value="blue"> 자동차용품
+             </div>
+             <div class="col-md-4">
+             <input type="checkbox" name="color" value="blue"> 반려동물용품
+             </div>
+             <br>
+             <div class="col-md-4">
+             <input type="checkbox" name="color" value="blue"> 문구/사무용품
+             </div>
+             <div class="col-md-4">
+             <input type="checkbox" name="color" value="blue"> 산업장비
+             </div>
+             <div class="col-md-4">
+             <input type="checkbox" name="color" value="blue"> 기타
+             </div>
+        </div>
+
+        <label>프로젝트 관련 파일 첨부</label>
+        <p id="file_name" class="mb-2" style="display: none; font-size: 13px;"></p>
+        <input id="Upload" type="file" hidden onchange="fileUpload(this)"/>
+        <div class="btn btn-primary" onclick="clickUpload()">
+          파일 업로드 하기
+        </div>
+        <div class="alert alert-danger mb-0 mt-3" role="alert" style="display: none; border-radius: 0px;"></div>
+      </div>
+      <div class="submit">
+        <button type="button" class="btn btn-primary" onclick="save()">의뢰하기</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- input은 name과 type 모두 이용 #은 id를 이용 .은 class를 이동, checkbox는 :checked 이용-->
+<script>
+  function fileUpload(element) {
+    $("#file_name").text($(element)[0].files[0].name);
+    $("#file_name").css('display', 'block')
+  }
+  function clickUpload() {
+    $("#Upload").click()
+  }
+  async function save() {
+    var biz_name = $("input#biz_name).val()
+    var phone = $("input#phone").val()
+    var email = $("input#email").val()
+    var product = $("input#product").val()
+    var budget = $("input#budget").val()
+    var period = $("input#period").val()
+    var biz_name = $(".form-control:checked").val()
+    var file = $("#Upload")[0].files[0]
+
+    console.log(`biz_name : ${biz_name}`)
+    console.log(`phone : ${phone}`)
+    console.log(`email : ${email}`)
+    console.log(`product : ${product}`)
+    console.log(`budget : ${budget}`)
+    console.log(`period : ${period}`)
+
+    if (!biz_name || !email || !product ) {
+      await $(".alert-danger").css('display', 'block')
+      await $(".alert-danger").text("필수 사항들을 입력해주세요.")
+      return
+    }
+    else {
+      var formData = new FormData()
+      formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+      formData.append('biz_name', biz_name)
+      formData.append('email', email)
+      formData.append('phone', phone)
+      formData.append('product', product)
+      formData.append('budget', budget)
+      formData.append('period', period)
+      formData.append('file', file)
+
+      var request = new XMLHttpRequest()
+      request.open("POST", "{% url 'API:request' %}")
+      request.onload = function (e) {
+        if (request.readyState === request.DONE) {
+          if (request.status === 200) {
+            var res = JSON.parse(request.response)
+            if (res.status == 'success'){
+              location.href = '/'
+            }
+            else{
+              $(".alert-danger").css('display', 'block')
+              $(".alert-danger").text(res.message)
+            }
+          }
+        }
+      }
+      request.send(formData)
+    }
+  }
+</script>
